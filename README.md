@@ -4,7 +4,6 @@ This notebook is an example data analysis and visualization of a fictional starb
 
 ## Python libraries
 
-
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -16,29 +15,12 @@ sns.set_theme(style = "darkgrid")
 
 ## Data loading and exploration
 
-
 ```python
 data = pd.read_csv("starbucks_data.csv",sep=';')
 data.head(5)
 ```
 
-
-
-
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -125,9 +107,8 @@ data.head(5)
 </table>
 </div>
 
+## The data can be interpreted as follows
 
-
-## The data can be interpreted as follows:
 | Column name                | Description                                              | Example                         |
 |----------------------------|---------------------------------------------------------|---------------------------------|
 | ID                         | The unique identifier of the drink, integer.            | 4                               |
@@ -141,9 +122,7 @@ data.head(5)
 | Protein (g)                | The protein content of the drink in grams, floating point number. | 6.0                             |
 | Caffeine (mg)              | The caffeine content of the drink in milligrams, floating point number. | 75.0                         |
 
-
 ## Handling missing values
-
 
 ```python
 data.info()
@@ -167,25 +146,8 @@ data.describe()
      9   Caffeine (mg)            37 non-null     float64
     dtypes: float64(6), int64(1), object(3)
     memory usage: 4.2+ KB
-    
-
-
-
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -284,10 +246,7 @@ data.describe()
 </table>
 </div>
 
-
-
 We can see that there are some missing values, we will replace these with the average of the given column after filtering out the outliers based on the standard deviation.
-
 
 ```python
 # Deleting duplicates
@@ -313,28 +272,11 @@ data['Caffeine (mg)'].fillna(data['Caffeine (mg)'].mean(), inplace=True)
 data = data.drop(columns=['Beverage_category'])
 ```
 
-
 ```python
 data
 ```
 
-
-
-
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -763,12 +705,9 @@ data
 </table>
 </div>
 
-
-
 ## Data visualization
 
 ### Caffeine content distribution
-
 
 ```python
 plt.figure(figsize=(12, 6))
@@ -781,14 +720,9 @@ plt.tight_layout()
 plt.show()
 ```
 
-
-    
 ![png](analysis_files/analysis_14_0.png)
-    
-
 
 ### Protein content by preparation method
-
 
 ```python
 plt.figure(figsize=(12, 6))
@@ -801,14 +735,9 @@ plt.tight_layout()
 plt.show()
 ```
 
-
-    
 ![png](analysis_files/analysis_16_0.png)
-    
-
 
 ### Distribution of preparation methods
-
 
 ```python
 beverage_prep_counts = data['Beverage_prep'].value_counts()
@@ -820,14 +749,9 @@ plt.ylabel('')
 plt.show()
 ```
 
-
-    
 ![png](analysis_files/analysis_18_0.png)
-    
-
 
 ### Correlation between calorie content and sugar content
-
 
 ```python
 plt.figure(figsize=(10, 6))
@@ -841,11 +765,6 @@ correlation = data['Calories'].corr(data['Sugars (g)'])
 print('Correlation between calories and sugar content: ', correlation)
 ```
 
-
-    
 ![png](analysis_files/analysis_20_0.png)
-    
-
 
     Correlation between calories and sugar content:  0.8771254609018775
-    
