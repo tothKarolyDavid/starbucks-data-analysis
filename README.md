@@ -2,7 +2,7 @@
 
 This notebook is an example data analysis and visualization of a fictional starbucks dataset.
 
-## Python csomagok
+## Python libraries
 
 
 ```python
@@ -14,7 +14,7 @@ import seaborn as sns
 sns.set_theme(style = "darkgrid")
 ```
 
-## Adatbetöltés és feltérképezés
+## Data loading and exploration
 
 
 ```python
@@ -127,23 +127,22 @@ data.head(5)
 
 
 
-## Az adatokat a következőképpen kell értelmezni:
-
-| Oszlop neve                | Leírás                                                  | Példa                           |
+## The data can be interpreted as follows:
+| Column name                | Description                                              | Example                         |
 |----------------------------|---------------------------------------------------------|---------------------------------|
-| ID                         | Az ital egyedi azonosítója, egész szám.                 | 4                               |
-| Beverage_category          | Az ital kategóriája, szöveges formátumú.               | Classic Espresso Drinks         |
-| Beverage                   | Az ital neve, szöveges formátumú.                       | Caffè Latte                     |
-| Beverage_prep              | Az ital előkészítési módja, szöveges formátumú.         | Short Nonfat Milk               |
-| Calories                   | Az ital kalóriatartalma, lebegőpontos szám.             | 70.0                            |
-| Total Fat (g)              | Az ital teljes zsírtartalma grammban, lebegőpontos szám. | 0.1                           |
-| Total Carbohydrates (g)    | Az ital teljes szénhidráttartalma grammban, lebegőpontos szám. | 75.0                         |
-| Sugars (g)                 | Az ital cukortartalma grammban, lebegőpontos szám.    | 9.0                             |
-| Protein (g)                | Az ital fehérjetartalma grammban, lebegőpontos szám.  | 6.0                             |
-| Caffeine (mg)              | Az ital koffeintartalma milligrammban, lebegőpontos szám. | 75.0                         |
+| ID                         | The unique identifier of the drink, integer.            | 4                               |
+| Beverage_category          | The category of the drink, text format.                 | Classic Espresso Drinks         |
+| Beverage                   | The name of the drink, text format.                     | Caffè Latte                     |
+| Beverage_prep              | The preparation method of the drink, text format.       | Short Nonfat Milk               |
+| Calories                   | The calorie content of the drink, floating point number. | 70.0                            |
+| Total Fat (g)              | The total fat content of the drink in grams, floating point number. | 0.1                           |
+| Total Carbohydrates (g)    | The total carbohydrate content of the drink in grams, floating point number. | 75.0                         |
+| Sugars (g)                 | The sugar content of the drink in grams, floating point number. | 9.0                             |
+| Protein (g)                | The protein content of the drink in grams, floating point number. | 6.0                             |
+| Caffeine (mg)              | The caffeine content of the drink in milligrams, floating point number. | 75.0                         |
 
 
-## Hibás értékek kezelése
+## Handling missing values
 
 
 ```python
@@ -287,15 +286,14 @@ data.describe()
 
 
 
-Látjuk hogy vannak null értékek, ezeket az adott oszlop átlagával helyettesítjük, miután az szélsőértékeket kiszűrtük a szórás alapján.
-
+We can see that there are some missing values, we will replace these with the average of the given column after filtering out the outliers based on the standard deviation.
 
 
 ```python
-# duplikált értékek szűrése
+# Deleting duplicates
 data = data.drop_duplicates()
 
-# Outlierek szűrése
+# Filtering out the outliers
 data = data[np.abs(data["Calories"]-data["Calories"].mean())<=(3*data["Calories"].std())]
 data = data[np.abs(data["Total Fat (g)"]-data["Total Fat (g)"].mean())<=(3*data["Total Fat (g)"].std())]
 data = data[np.abs(data["Total Carbohydrates (g)"]-data["Total Carbohydrates (g)"].mean())<=(3*data["Total Carbohydrates (g)"].std())]
@@ -303,7 +301,7 @@ data = data[np.abs(data["Sugars (g)"]-data["Sugars (g)"].mean())<=(3*data["Sugar
 data = data[np.abs(data["Protein (g)"]-data["Protein (g)"].mean())<=(3*data["Protein (g)"].std())]
 data = data[np.abs(data["Caffeine (mg)"]-data["Caffeine (mg)"].mean())<=(3*data["Caffeine (mg)"].std())]
 
-# NaN értékek szűrése
+# Filling missing values with the mean
 data['Calories'].fillna(data['Calories'].mean(), inplace=True)
 data['Total Fat (g)'].fillna(data['Total Fat (g)'].mean(), inplace=True)
 data['Total Carbohydrates (g)'].fillna(data['Total Carbohydrates (g)'].mean(), inplace=True)
@@ -311,7 +309,7 @@ data['Sugars (g)'].fillna(data['Sugars (g)'].mean(), inplace=True)
 data['Protein (g)'].fillna(data['Protein (g)'].mean(), inplace=True)
 data['Caffeine (mg)'].fillna(data['Caffeine (mg)'].mean(), inplace=True)
 
-# Mivel a Beverage_category csak 1 értéket tartalmaz, ezért azt elhagyjuk
+# Because Beverage_category contains only 1 value, we drop it
 data = data.drop(columns=['Beverage_category'])
 ```
 
@@ -767,9 +765,9 @@ data
 
 
 
-## Adatvizualizáció
+## Data visualization
 
-### Koffein tartalom italok szerint
+### Caffeine content distribution
 
 
 ```python
@@ -789,7 +787,7 @@ plt.show()
     
 
 
-### Fehérje tartalom elkészítési módok szerint
+### Protein content by preparation method
 
 
 ```python
@@ -809,7 +807,7 @@ plt.show()
     
 
 
-### Elkészítési módok megoszlása
+### Distribution of preparation methods
 
 
 ```python
@@ -828,7 +826,7 @@ plt.show()
     
 
 
-### Kalória tartalom és cukor tartalom korrelációja
+### Correlation between calorie content and sugar content
 
 
 ```python
@@ -840,7 +838,7 @@ plt.ylabel('Sugar Content (g)')
 plt.show()
 
 correlation = data['Calories'].corr(data['Sugars (g)'])
-print('A kalória és a cukor közötti korreláció: ', correlation)
+print('Correlation between calories and sugar content: ', correlation)
 ```
 
 
@@ -849,5 +847,5 @@ print('A kalória és a cukor közötti korreláció: ', correlation)
     
 
 
-    A kalória és a cukor közötti korreláció:  0.8771254609018775
+    Correlation between calories and sugar content:  0.8771254609018775
     
